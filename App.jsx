@@ -1,4 +1,5 @@
 import * as React from "react";
+import { SafeAreaView, StyleSheet, StatusBar } from "react-native";
 
 // React Native Navigation System
 import { NavigationContainer } from "@react-navigation/native";
@@ -6,30 +7,34 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 const Stack = createNativeStackNavigator();
 
 // Screens
-import Home from "./screens/Home";
-import About from "./screens/About";
-import Contact from "./screens/Contact";
+import Login from "./screens/Login";
+import Dashboard from "./screens/Dashboard";
+import Profile from "./screens/Profile";
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{ title: "Home Page" }}
-        />
-        <Stack.Screen
-          name="About"
-          component={About}
-          options={{ title: "About Page" }}
-        />
-        <Stack.Screen
-          name="Contact"
-          component={Contact}
-          options={{ title: "Contact Page" }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <SafeAreaView style={styles.container}>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+            animationTypeForReplace: "push",
+            animation: "none",
+          }}
+        >
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen name="Profile" component={Profile} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight,
+    marginBottom: 0,
+  },
+});

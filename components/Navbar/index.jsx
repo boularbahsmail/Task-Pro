@@ -3,67 +3,63 @@ import { Pressable, View, Text } from "react-native";
 import { useRoute } from "@react-navigation/native";
 
 // Icons
-import Icon from "react-native-vector-icons/FontAwesome";
+import MaterialCommunityIconsIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import FeatherIcon from "react-native-vector-icons/Feather";
 
 const Navbar = ({ navigation }) => {
   const route = useRoute();
   return (
-    <View className="absolute left-3 right-3 bottom-3 m-auto rounded-full px-2 py-2 flex flex-row justify-between items-center bg-black">
+    <View className="absolute left-3 right-3 bottom-3 m-auto px-2 py-2 flex flex-row justify-center gap-x-6 items-center">
       <View>
         <Pressable
           onPress={() => {
-            navigation.navigate("Home");
+            navigation.navigate("Dashboard");
           }}
         >
-          <Text
-            className={`text-md font-bold p-3 rounded-full ${
-              route.name == "Home" ? "text-black bg-white" : "text-white"
+          <View
+            className={`py-2 px-4 rounded-full flex flex-row justify-center items-center bg-white shadow-xl shadow-gray-200 border border-gray-100 ${
+              route.name == "Dashboard" && "bg-[#151515]"
             }`}
           >
-            <Icon
-              name="home"
-              size={25}
-              // color={route.name == "Home" ? "#CB3837" : "#FFFFFF"}
+            <MaterialCommunityIconsIcon
+              name="view-dashboard-variant-outline"
+              size={22}
+              color={route.name == "Dashboard" ? "white" : "black"}
             />
-          </Text>
+            <Text
+              className={`ml-2 text-md font-semibold text-[#151515] ${
+                route.name == "Dashboard" && "text-white"
+              }`}
+            >
+              Dashboard
+            </Text>
+          </View>
         </Pressable>
       </View>
       <View>
         <Pressable
           onPress={() => {
-            navigation.navigate("About");
+            navigation.navigate("Profile");
           }}
         >
-          <Text
-            className={`text-md font-bold py-3 px-4 rounded-full ${
-              route.name == "About" ? "text-black bg-white" : "text-white"
+          <View
+            className={`py-2 px-4 rounded-full flex flex-row justify-center items-center bg-white shadow-2xl shadow-gray-200 border border-gray-100 ${
+              route.name == "Profile" && "bg-[#151515]"
             }`}
           >
-            <Icon
+            <FeatherIcon
               name="user"
-              size={25}
-              // color={route.name == "About" ? "#CB3837" : "#FFFFFF"}
+              size={22}
+              color={route.name == "Profile" ? "white" : "black"}
             />
-          </Text>
-        </Pressable>
-      </View>
-      <View>
-        <Pressable
-          onPress={() => {
-            navigation.navigate("Contact");
-          }}
-        >
-          <Text
-            className={`text-md font-bold py-3 px-4 rounded-full ${
-              route.name == "Contact" ? "text-black bg-white" : "text-white"
-            }`}
-          >
-            <Icon
-              name="phone"
-              size={25}
-              // color={route.name == "Contact" ? "#CB3837" : "#FFFFFF"}
-            />
-          </Text>
+            <Text
+              className={`ml-2 text-md font-semibold text-[#151515] ${
+                route.name == "Profile" && "text-white"
+              }`}
+            >
+              Profile
+            </Text>
+          </View>
         </Pressable>
       </View>
     </View>

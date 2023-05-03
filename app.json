@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "react-native-tailwindcss-starter",
-    "slug": "react-native-tailwindcss-starter",
+    "name": "Task-Pro",
+    "slug": "Task-Pro",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
