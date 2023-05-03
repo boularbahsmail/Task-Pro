@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   Text,
@@ -7,10 +7,8 @@ import {
   TouchableOpacity,
   TextInput,
   KeyboardAvoidingView,
+  Alert,
 } from "react-native";
-
-// Components
-import Navbar from "../../components/Navbar";
 
 // Assets
 import LoginWelcome from "../../assets/images/login-welcome.png";
@@ -18,8 +16,30 @@ import LoginWelcome from "../../assets/images/login-welcome.png";
 // Icons
 import IoniconsIcon from "react-native-vector-icons/Ionicons";
 
+// Async Storage
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const Login = ({ navigation }) => {
-  const [userInfo, setUserInfo] = useState();
+  const [userFullNameValue, setUserFullNameValue] = useState("");
+  const [userEmailValue, setUserEmailValue] = useState("");
+
+  const getData = async () => {
+    try {
+      const currentUserFullName = await AsyncStorage.getItem("userFullName");
+      const currentUserEmail = await AsyncStorage.getItem("userEmail");
+      if (currentUserFullName !== null && currentUserEmail !== null) {
+        navigation.navigate("Profile");
+      }
+    } catch (error) {
+      Alert.alert("Error", error);
+    }
+  };
+
+  useEffect(() => {
+    setUserFullNameValue("");
+    setUserEmailValue("");
+    getData();
+  }, []);
 
   return (
     <KeyboardAvoidingView
@@ -33,7 +53,7 @@ const Login = ({ navigation }) => {
             <Image
               source={LoginWelcome}
               alt="Welcome-Login-Image"
-              style={{ height: 250, width: "100%" }}
+              style={{ height: 200, width: "100%" }}
             />
           </View>
 
@@ -53,38 +73,86 @@ const Login = ({ navigation }) => {
           </View>
 
           <View className="mt-10 flex flex-col justify-center items-center mb-16">
-            <Text className="text-gray-400 mb-3 text-sm text-left w-80 px-2 font-normal">
-              What shoud we call you?
+            <Text className="text-gray-600 mb-3 text-sm text-left w-80 px-2 font-bold">
+              Full name
             </Text>
             <View>
               <View className="w-full mb-4">
                 <TextInput
-                  className="rounded-md h-10 w-80 border border-gray-100 px-4 text-black bg-white shadow-2xl shadow-gray-300 focus:border-gray-400"
-                  placeholder="Ismail Boularbah"
+                  className="rounded-md h-11 w-80 border border-gray-100 px-4 text-black bg-white shadow-2xl shadow-gray-300 focus:border-gray-400"
+                  placeholder="John Doe"
                   autoComplete="off"
                   autoFocus={false}
                   cursorColor="gray"
                   enterKeyHint="enter"
-                  onChangeText={(currentUserName) =>
-                    setUserInfo({
-                      ...userInfo,
-                      userName: currentUserName,
-                    })
-                  }
+                  enablesReturnKeyAutomatically={true}
+                  value={userFullNameValue}
+                  onChangeText={async (currentUserName) => {
+                    setUserFullNameValue(currentUserName);
+                    try {
+                      await AsyncStorage.setItem(
+                        "userFullName",
+                        currentUserName
+                      );
+                    } catch (error) {
+                      Alert.alert("Error", error);
+                    }
+                  }}
                 />
               </View>
-              <View>
+
+              <Text className="text-gray-600 mb-3 text-sm text-left w-80 px-2 font-bold">
+                Email
+              </Text>
+              <View className="w-full mb-4">
+                <TextInput
+                  className="rounded-md h-11 w-80 border border-gray-100 px-4 text-black bg-white shadow-2xl shadow-gray-300 focus:border-gray-400"
+                  placeholder="Doe_John01@example.com"
+                  autoComplete="email"
+                  autoFocus={false}
+                  cursorColor="gray"
+                  enterKeyHint="enter"
+                  enablesReturnKeyAutomatically={true}
+                  value={userEmailValue}
+                  onChangeText={async (currentUserEmail) => {
+                    setUserEmailValue(currentUserEmail);
+                    try {
+                      await AsyncStorage.setItem("userEmail", currentUserEmail);
+                    } catch (error) {
+                      Alert.alert("Error", error);
+                    }
+                  }}
+                />
+              </View>
+              <View className="mt-1">
                 <TouchableOpacity
-                  className="rounded-md py-1.5 px-6 bg-red-600 border border-red-500 shadow-2xl shadow-red-600 flex flex-row justify-center items-center"
+                  className="rounded-md py-2.5 px-6 bg-red-600 border border-red-500 shadow-2xl shadow-red-600 flex flex-row justify-center items-center"
                   activeOpacity={0.7}
-                  onPress={() => {
-                    userInfo?.userName && alert(userInfo?.userName);
+                  onPress={async () => {
+                    try {
+                      const currentUserFullName = await AsyncStorage.getItem(
+                        "userFullName"
+                      );
+                      const currentUserEmail = await AsyncStorage.getItem(
+                        "userEmail"
+                      );
+                      if (
+                        currentUserFullName !== null &&
+                        currentUserEmail !== null
+                      ) {
+                        navigation.navigate("Profile");
+                      } else {
+                        Alert.alert("Login failed", "All fields are required");
+                      }
+                    } catch (error) {
+                      Alert.alert("Error", error);
+                    }
                   }}
                 >
-                  <Text className="m-0 p-0 mr-1 text-md font-bold text-white">
+                  <Text className="m-0 p-0 mr-1 text-md font-bold text-white mb-1">
                     Continue
                   </Text>
-                  <Text className="m-0 p-0 rotate-90 mt-1.5">
+                  <Text className="m-0 p-0 rotate-90">
                     <IoniconsIcon
                       name="ios-arrow-up-circle-outline"
                       size={20}
