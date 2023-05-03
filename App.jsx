@@ -8,7 +8,7 @@ const Stack = createNativeStackNavigator();
 
 // Screens
 import Login from "./screens/Login";
-import Dashboard from "./screens/Dashboard";
+import Tasks from "./screens/Tasks";
 import Profile from "./screens/Profile";
 
 export default function App() {
@@ -23,7 +23,7 @@ export default function App() {
           }}
         >
           <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen name="Tasks" component={Tasks} />
           <Stack.Screen name="Profile" component={Profile} />
         </Stack.Navigator>
       </NavigationContainer>
