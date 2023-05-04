@@ -1,5 +1,10 @@
 import * as React from "react";
-import { SafeAreaView, StyleSheet, StatusBar } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  StatusBar,
+  KeyboardAvoidingView,
+} from "react-native";
 
 // React Native Navigation System
 import { NavigationContainer } from "@react-navigation/native";
@@ -14,19 +19,25 @@ import Profile from "./screens/Profile";
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-            animationTypeForReplace: "push",
-            animation: "none",
-          }}
-        >
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Tasks" component={Tasks} />
-          <Stack.Screen name="Profile" component={Profile} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "position" : ""}
+        enabled
+      >
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+              animationTypeForReplace: "push",
+              animation: "none",
+            }}
+          >
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Tasks" component={Tasks} />
+            <Stack.Screen name="Profile" component={Profile} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }

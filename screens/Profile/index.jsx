@@ -11,42 +11,108 @@ import avatar from "../../assets/images/user-avatar.png";
 // Icons
 import AntDesignIcon from "react-native-vector-icons/AntDesign";
 import FontistoIcon from "react-native-vector-icons/Fontisto";
+import MaterialCommunityIconsIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
 // Async Storage
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import * as ImagePicker from "expo-image-picker";
+
 const Profile = ({ navigation }) => {
   const [userFullName, setUserFullName] = useState("");
   const [userEmail, setUserEmail] = useState("");
+  const [image, setImage] = useState(null);
 
-  useEffect(() => {
-    const getData = async () => {
+  const checkForCameraRollPermission = async () => {
+    const { status } = await ImagePicker.getMediaLibraryPermissionsAsync();
+    if (status !== "granted") {
+      alert(
+        "Please grant camera roll permissions inside your system's settings"
+      );
+    } else {
+      console.log("Media Permissions are granted");
+    }
+  };
+
+  const addImage = async () => {
+    let _image = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    });
+    if (!_image.assets[0].cancelled) {
+      setImage(_image.assets[0].uri);
       try {
-        const currentUserFullName = await AsyncStorage.getItem("userFullName");
-        const currentUserEmail = await AsyncStorage.getItem("userEmail");
-        if (currentUserFullName !== null && currentUserEmail !== null) {
-          setUserFullName(currentUserFullName);
-          setUserEmail(currentUserEmail);
-        }
+        await AsyncStorage.setItem("userAvatar", _image.assets[0].uri);
       } catch (error) {
         Alert.alert("Error", error);
       }
-    };
+    }
+  };
+
+  const getData = async () => {
+    try {
+      const currentUserFullName = await AsyncStorage.getItem("userFullName");
+      const currentUserEmail = await AsyncStorage.getItem("userEmail");
+      const currentUserAvatar = await AsyncStorage.getItem("userAvatar");
+      if (currentUserFullName !== null && currentUserEmail !== null) {
+        setUserFullName(currentUserFullName);
+        setUserEmail(currentUserEmail);
+        setImage(currentUserAvatar);
+      }
+    } catch (error) {
+      Alert.alert("Error", error);
+    }
+  };
+
+  const logOut = async () => {
+    navigation.navigate("Login");
+    await AsyncStorage.removeItem("userFullName");
+    await AsyncStorage.removeItem("userEmail");
+    await AsyncStorage.removeItem("userAvatar");
+  };
+
+  useEffect(() => {
     getData();
+    // checkForCameraRollPermission();
   }, []);
 
   return (
     <View className="flex flex-1 relative h-screen bg-white">
       <View className="py-4 px-6 pt-10">
         <View
-          className="border border-gray-600 flex justify-center items-center mx-auto overflow-hidden rounded-full shadow-2xl shadow-[#262626]"
-          style={{ height: 120, width: 120 }}
+          className="relative flex justify-center items-center mx-auto rounded-full shadow-2xl shadow-gray-900"
+          style={{ height: 130, width: 130 }}
         >
-          <Image
-            source={avatar}
-            alt="User-Avatar"
-            style={{ height: 120, width: 120 }}
-          />
+          <View className="rounded-full overflow-hidden border border-gray-300 p-1 bg-gray-100">
+            {image ? (
+              <Image
+                source={{ uri: image }}
+                alt="User-Avatar"
+                style={{ height: 130, width: 130, borderRadius: 300 }}
+              />
+            ) : (
+              <Image
+                source={avatar}
+                alt="User-Avatar"
+                style={{ height: 130, width: 130, borderRadius: 300 }}
+              />
+            )}
+          </View>
+          <View className="absolute right-0 bottom-2">
+            <TouchableOpacity
+              activeOpacity={0.7}
+              className="bg-red-600 border border-red-700 w-7 h-7 rounded-full shadow-2xl shadow-red-600 flex justify-center items-center"
+              onPress={addImage}
+            >
+              <MaterialCommunityIconsIcon
+                name="image-edit"
+                size={14}
+                color="white"
+              />
+            </TouchableOpacity>
+          </View>
         </View>
         <View className="flex flex-col justify-center items-center gap-y-2 py-4 pt-6">
           <Text className="text-4xl font-black text-black text-center">
@@ -64,10 +130,7 @@ const Profile = ({ navigation }) => {
             <TouchableOpacity
               activeOpacity={0.7}
               className="rounded-md py-2 px-4 bg-red-600 border border-red-600 shadow-2xl shadow-red-600 flex flex-row justify-center items-center"
-              onPress={async () => {
-                navigation.navigate("Login");
-                await AsyncStorage.removeItem("userFullName");
-              }}
+              onPress={logOut}
             >
               <AntDesignIcon name="logout" size={14} color="white" />
               <Text className="text-white font-bold text-md ml-2">Logout</Text>
