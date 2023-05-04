@@ -8,6 +8,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Alert,
+  Platform,
 } from "react-native";
 
 // Assets
@@ -65,96 +66,105 @@ const Login = ({ navigation }) => {
           </Text>
         </View>
 
-        <View className="mt-10 flex flex-col justify-center items-center mb-16">
-          <Text className="text-gray-600 mb-3 text-sm text-left w-80 px-2 font-bold">
-            Full name
-          </Text>
-          <View>
-            <View className="w-full mb-4">
-              <TextInput
-                className="rounded-md h-11 w-80 border border-gray-100 px-4 text-black bg-white shadow-2xl shadow-gray-300 focus:border-gray-400"
-                placeholder="John Doe"
-                autoComplete="off"
-                autoFocus={false}
-                cursorColor="gray"
-                enterKeyHint="enter"
-                enablesReturnKeyAutomatically={true}
-                value={userFullNameValue}
-                onChangeText={async (currentUserName) => {
-                  setUserFullNameValue(currentUserName);
-                  try {
-                    await AsyncStorage.setItem("userFullName", currentUserName);
-                  } catch (error) {
-                    Alert.alert("Error", error);
-                  }
-                }}
-              />
-            </View>
-
+        <KeyboardAvoidingView
+          enabled
+          behavior={Platform.OS === "ios" ? "padding" : "position"}
+          style={{ backgroundColor: "white" }}
+        >
+          <View className="mt-10 flex flex-col justify-center items-center pb-6 mb-10 bg-white">
             <Text className="text-gray-600 mb-3 text-sm text-left w-80 px-2 font-bold">
-              Email
+              Full name
             </Text>
-            <View className="w-full mb-4">
-              <TextInput
-                className="rounded-md h-11 w-80 border border-gray-100 px-4 text-black bg-white shadow-2xl shadow-gray-300 focus:border-gray-400"
-                placeholder="john_doe01@example.com"
-                autoComplete="email"
-                autoFocus={false}
-                cursorColor="gray"
-                enterKeyHint="enter"
-                enablesReturnKeyAutomatically={true}
-                value={userEmailValue}
-                onChangeText={async (currentUserEmail) => {
-                  setUserEmailValue(currentUserEmail);
-                  try {
-                    await AsyncStorage.setItem("userEmail", currentUserEmail);
-                  } catch (error) {
-                    Alert.alert("Error", error);
-                  }
-                }}
-              />
-            </View>
-            <View className="mt-1">
-              <TouchableOpacity
-                className="rounded-md py-2.5 px-6 bg-red-600 border border-red-500 shadow-2xl shadow-red-600 flex flex-row justify-center items-center"
-                activeOpacity={0.7}
-                onPress={async () => {
-                  try {
-                    const currentUserFullName = await AsyncStorage.getItem(
-                      "userFullName"
-                    );
-                    const currentUserEmail = await AsyncStorage.getItem(
-                      "userEmail"
-                    );
-                    if (
-                      currentUserFullName !== null &&
-                      currentUserEmail !== null
-                    ) {
-                      navigation.navigate("Profile");
-                      setUserFullNameValue("");
-                      setUserEmailValue("");
-                    } else {
-                      Alert.alert("Login failed", "All fields are required");
+            <View>
+              <View className="w-full mb-4">
+                <TextInput
+                  className="rounded-md h-11 w-80 border border-gray-100 px-4 text-black bg-white shadow-2xl shadow-gray-300 focus:border-gray-400"
+                  placeholder="John Doe"
+                  autoComplete="off"
+                  autoFocus={false}
+                  cursorColor="gray"
+                  enterKeyHint="enter"
+                  enablesReturnKeyAutomatically={true}
+                  value={userFullNameValue}
+                  onChangeText={async (currentUserName) => {
+                    setUserFullNameValue(currentUserName);
+                    try {
+                      await AsyncStorage.setItem(
+                        "userFullName",
+                        currentUserName
+                      );
+                    } catch (error) {
+                      Alert.alert("Error", error);
                     }
-                  } catch (error) {
-                    Alert.alert("Error", error);
-                  }
-                }}
-              >
-                <Text className="m-0 p-0 mr-1 text-md font-bold text-white mb-1">
-                  Continue
-                </Text>
-                <Text className="m-0 p-0 rotate-90">
-                  <IoniconsIcon
-                    name="ios-arrow-up-circle-outline"
-                    size={20}
-                    color="white"
-                  />
-                </Text>
-              </TouchableOpacity>
+                  }}
+                />
+              </View>
+
+              <Text className="text-gray-600 mb-3 text-sm text-left w-80 px-2 font-bold">
+                Email
+              </Text>
+              <View className="w-full mb-4">
+                <TextInput
+                  className="rounded-md h-11 w-80 border border-gray-100 px-4 text-black bg-white shadow-2xl shadow-gray-300 focus:border-gray-400"
+                  placeholder="john_doe01@example.com"
+                  autoComplete="email"
+                  autoFocus={false}
+                  cursorColor="gray"
+                  enterKeyHint="enter"
+                  enablesReturnKeyAutomatically={true}
+                  value={userEmailValue}
+                  onChangeText={async (currentUserEmail) => {
+                    setUserEmailValue(currentUserEmail);
+                    try {
+                      await AsyncStorage.setItem("userEmail", currentUserEmail);
+                    } catch (error) {
+                      Alert.alert("Error", error);
+                    }
+                  }}
+                />
+              </View>
+              <View className="mt-1">
+                <TouchableOpacity
+                  className="rounded-md py-2.5 px-6 bg-red-600 border border-red-500 shadow-2xl shadow-red-600 flex flex-row justify-center items-center"
+                  activeOpacity={0.7}
+                  onPress={async () => {
+                    try {
+                      const currentUserFullName = await AsyncStorage.getItem(
+                        "userFullName"
+                      );
+                      const currentUserEmail = await AsyncStorage.getItem(
+                        "userEmail"
+                      );
+                      if (
+                        currentUserFullName !== null &&
+                        currentUserEmail !== null
+                      ) {
+                        navigation.navigate("Profile");
+                        setUserFullNameValue("");
+                        setUserEmailValue("");
+                      } else {
+                        Alert.alert("Login failed", "All fields are required");
+                      }
+                    } catch (error) {
+                      Alert.alert("Error", error);
+                    }
+                  }}
+                >
+                  <Text className="m-0 p-0 mr-1 text-md font-bold text-white mb-1">
+                    Continue
+                  </Text>
+                  <Text className="m-0 p-0 rotate-90">
+                    <IoniconsIcon
+                      name="ios-arrow-up-circle-outline"
+                      size={20}
+                      color="white"
+                    />
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </View>
       {/* <Navbar navigation={navigation} /> */}
       <StatusBar style="auto" />

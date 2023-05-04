@@ -140,9 +140,13 @@ const Profile = ({ navigation }) => {
         </View>
 
         <View className="mt-8">
-          <Text className="text-xl font-semibold text-[#262626] text-left">
+          <Text className="text-lg font-semibold text-[#262626] text-left">
             Tasks Statistics
           </Text>
+        </View>
+
+        <View>
+          <Text>...</Text>
         </View>
       </View>
       <Navbar navigation={navigation} />
