@@ -6,7 +6,7 @@ import { Text, View, Image, TouchableOpacity, Alert } from "react-native";
 import Navbar from "../../components/Navbar";
 
 // Assets
-import avatar from "../../assets/images/user-avatar.png";
+import defaultAvatar from "../../assets/images/default-avatar.png";
 
 // Icons
 import AntDesignIcon from "react-native-vector-icons/AntDesign";
@@ -94,7 +94,7 @@ const Profile = ({ navigation }) => {
               />
             ) : (
               <Image
-                source={avatar}
+                source={defaultAvatar}
                 alt="User-Avatar"
                 style={{ height: 130, width: 130, borderRadius: 300 }}
               />
@@ -114,6 +114,7 @@ const Profile = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
+
         <View className="flex flex-col justify-center items-center gap-y-2 py-4 pt-6">
           <Text className="text-4xl font-black text-black text-center">
             {userFullName}
@@ -136,6 +137,12 @@ const Profile = ({ navigation }) => {
               <Text className="text-white font-bold text-md ml-2">Logout</Text>
             </TouchableOpacity>
           </View>
+        </View>
+
+        <View className="mt-8">
+          <Text className="text-xl font-semibold text-[#262626] text-left">
+            Tasks Statistics
+          </Text>
         </View>
       </View>
       <Navbar navigation={navigation} />
