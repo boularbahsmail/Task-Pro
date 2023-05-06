@@ -17,6 +17,7 @@ import MaterialCommunityIconsIcon from "react-native-vector-icons/MaterialCommun
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import * as ImagePicker from "expo-image-picker";
+import Header from "../../components/Header";
 
 const Profile = ({ navigation }) => {
   const [userFullName, setUserFullName] = useState("");
@@ -79,7 +80,8 @@ const Profile = ({ navigation }) => {
   }, []);
 
   return (
-    <View className="flex flex-1 relative h-screen bg-white">
+    <View className="flex flex-1 relative h-screen bg-white py-4">
+      <Header navigation={navigation} />
       <View className="py-4 px-6 pt-10">
         <View
           className="relative flex justify-center items-center mx-auto rounded-full shadow-2xl shadow-gray-900"

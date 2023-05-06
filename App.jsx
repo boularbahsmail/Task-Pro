@@ -1,10 +1,5 @@
 import * as React from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  StatusBar,
-  KeyboardAvoidingView,
-} from "react-native";
+import { SafeAreaView, StyleSheet, StatusBar } from "react-native";
 
 // React Native Navigation System
 import { NavigationContainer } from "@react-navigation/native";
