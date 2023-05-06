@@ -7,7 +7,7 @@ import Navbar from "../../components/Navbar";
 
 // Icons
 import AntDesignIcon from "react-native-vector-icons/AntDesign";
-import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5";
+// import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 
 // Async Storage
@@ -15,9 +15,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Assets
 import NoTasks from "../../assets/images/no-data.png";
+import appIcon from "../../assets/app-icon.png";
 
 // Tasks Dat
 import tasks from "./data";
+import Header from "../../components/Header";
 
 const Tasks = ({ navigation }) => {
   const [currentUserFullName, setCurrentUserFullName] = useState("");
@@ -54,29 +56,12 @@ const Tasks = ({ navigation }) => {
   useEffect(() => {
     getData();
     getTime();
-  }, []);
+  });
 
   return (
     <View className="flex flex-1 relative h-screen bg-white">
       <View className="py-4">
-        <View className="flex flex-row justify-between items-center px-4">
-          <View className="flex flex-row justify-start items-center">
-            <FontAwesomeIcon name="tasks" size={22} color="#dc2626" />
-            <Text className="font-bold text-lg ml-2">TaskPro</Text>
-          </View>
-
-          <View>
-            <TouchableOpacity
-              className="flex flex-row justify-center items-center bg-[#FFFFFF] py-2 px-4 pl-3 rounded-full border border-red-600 shadow-2xl shadow-gray-100"
-              activeOpacity={0.5}
-            >
-              <AntDesignIcon name="pluscircle" size={16} color="#dc2626" />
-              <Text className="text-red-600 font-semibold text-sm ml-1.5">
-                New
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        <Header navigation={navigation} />
 
         <View className="my-6 px-4">
           <Text className="text-lg font-normal text-gray-500 mb-1">
@@ -130,37 +115,42 @@ const Tasks = ({ navigation }) => {
             </Text>
           </TouchableOpacity>
           {tasks
-            ? tasks.map((task) => (
-                <TouchableOpacity
-                  className={`py-1 px-4 pr-1 rounded-full border border-[#151515] flex flex-row justify-start items-center ${
-                    tasksStatus == task.statusSlug ? "bg-[#151515]" : "bg-white"
-                  }`}
-                  activeOpacity={0.7}
-                  key={task.id}
-                  onPress={() => {
-                    setTasksStatus(task.statusSlug);
-                  }}
-                >
-                  <Text
-                    className={`text-sm font-semibold ${
-                      tasksStatus == task.statusSlug
-                        ? "text-white"
-                        : "text-[#151515]"
-                    }`}
-                  >
-                    {task.status}
-                  </Text>
-                  <Text
-                    className={`text-sm font-semibold ml-2 py-1 px-3 rounded-full ${
-                      tasksStatus == task.statusSlug
-                        ? "text-[#151515] bg-white"
-                        : "text-white bg-[#151515]"
-                    }`}
-                  >
-                    0
-                  </Text>
-                </TouchableOpacity>
-              ))
+            ? tasks.map(
+                (task) =>
+                  task.status && (
+                    <TouchableOpacity
+                      className={`py-1 px-4 pr-1 rounded-full border border-[#151515] flex flex-row justify-start items-center ${
+                        tasksStatus == task.statusSlug
+                          ? "bg-[#151515]"
+                          : "bg-white"
+                      }`}
+                      activeOpacity={0.7}
+                      key={task.id}
+                      onPress={() => {
+                        setTasksStatus(task.statusSlug);
+                      }}
+                    >
+                      <Text
+                        className={`text-sm font-semibold ${
+                          tasksStatus == task.statusSlug
+                            ? "text-white"
+                            : "text-[#151515]"
+                        }`}
+                      >
+                        {task.status}
+                      </Text>
+                      <Text
+                        className={`text-sm font-semibold ml-2 py-1 px-3 rounded-full ${
+                          tasksStatus == task.statusSlug
+                            ? "text-[#151515] bg-white"
+                            : "text-white bg-[#151515]"
+                        }`}
+                      >
+                        0
+                      </Text>
+                    </TouchableOpacity>
+                  )
+              )
             : null}
         </ScrollView>
         {/* </View> */}

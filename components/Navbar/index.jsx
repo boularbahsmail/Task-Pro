@@ -35,7 +35,7 @@ const Navbar = ({ navigation }) => {
   });
 
   return (
-    <View className="absolute left-0 right-0 bottom-0 m-auto px-2 py-4 flex flex-row justify-center items-center bg-white">
+    <View className="absolute left-0 right-0 bottom-0 m-auto px-2 py-3 flex flex-row justify-center items-center bg-white">
       <View>
         <TouchableOpacity
           activeOpacity={0.7}
