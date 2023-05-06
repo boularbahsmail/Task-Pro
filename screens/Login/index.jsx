@@ -29,7 +29,7 @@ const Login = ({ navigation }) => {
       const currentUserFullName = await AsyncStorage.getItem("userFullName");
       const currentUserEmail = await AsyncStorage.getItem("userEmail");
       if (currentUserFullName !== null && currentUserEmail !== null) {
-        navigation.navigate("Profile");
+        navigation.navigate("Tasks");
       }
     } catch (error) {
       Alert.alert("Error", error);
@@ -125,7 +125,7 @@ const Login = ({ navigation }) => {
               </View>
               <View className="mt-1">
                 <TouchableOpacity
-                  className="rounded-md py-2.5 px-6 bg-red-600 border border-red-500 shadow-2xl shadow-red-600 flex flex-row justify-center items-center"
+                  className="rounded-full py-2 px-6 bg-red-600 border border-red-500 shadow-2xl shadow-red-600 flex flex-row justify-center items-center"
                   activeOpacity={0.7}
                   onPress={async () => {
                     try {

@@ -123,14 +123,14 @@ const Profile = ({ navigation }) => {
             <Text className="bg-gray-50 border border-gray-100 py-1 px-1.5 rounded-md text-center">
               <FontistoIcon name="email" size={14} color="gray" />
             </Text>
-            <Text className="ml-1 text-xs text-gray-500 bg-gray-50 border border-gray-100 py-1 px-3 rounded-md text-center">
+            <Text className="ml-1 text-xs text-gray-500 bg-gray-50 border border-gray-100 py-1 px-1.5 rounded-md text-center">
               {userEmail}
             </Text>
           </View>
           <View className="pt-2 w-42">
             <TouchableOpacity
               activeOpacity={0.7}
-              className="rounded-md py-2 px-4 bg-red-600 border border-red-600 shadow-2xl shadow-red-600 flex flex-row justify-center items-center"
+              className="rounded-full py-2 px-4 bg-red-600 border border-red-600 shadow-2xl shadow-red-600 flex flex-row justify-center items-center"
               onPress={logOut}
             >
               <AntDesignIcon name="logout" size={14} color="white" />
