@@ -82,7 +82,7 @@ const Profile = ({ navigation }) => {
   return (
     <View className="flex flex-1 relative h-screen bg-white py-4">
       <Header navigation={navigation} />
-      <View className="py-4 px-6 pt-10">
+      <View className="py-4 px-6 pt-8">
         <View
           className="relative flex justify-center items-center mx-auto rounded-full shadow-2xl shadow-gray-900"
           style={{ height: 130, width: 130 }}
@@ -141,7 +141,7 @@ const Profile = ({ navigation }) => {
           </View>
         </View>
 
-        <View className="mt-8">
+        <View className="mt-4">
           <Text className="text-lg font-semibold text-[#262626] text-left">
             Tasks Statistics
           </Text>

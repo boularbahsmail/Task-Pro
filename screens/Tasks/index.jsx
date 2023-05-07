@@ -202,16 +202,29 @@ const Tasks = ({ navigation }) => {
                       </Text>
                     </View>
 
-                    <View>
-                      <Text
-                        className={`py-1 px-3 text-white text-xs border rounded-full font-semibold`}
-                        style={{
-                          backgroundColor: task.statusColor,
-                          borderColor: task.statusColor,
-                        }}
-                      >
-                        {task.status}
-                      </Text>
+                    <View className="flex flex-row justify-center items-center">
+                      <View className="flex flex-row justify-start items-center mr-2 border border-gray-200 rounded-full py-1 px-3 pl-1">
+                        <AntDesignIcon
+                          name="clockcircleo"
+                          size={15}
+                          color="#4b5563"
+                        />
+                        <Text className="text-gray-600 text-xs ml-1">
+                          {task.remindWhen}
+                        </Text>
+                      </View>
+
+                      <View>
+                        <Text
+                          className={`py-1 px-3 text-white text-xs border rounded-full font-semibold`}
+                          style={{
+                            backgroundColor: task.statusColor,
+                            borderColor: task.statusColor,
+                          }}
+                        >
+                          {task.status}
+                        </Text>
+                      </View>
                     </View>
                   </View>
                 </View>
@@ -248,16 +261,29 @@ const Tasks = ({ navigation }) => {
                         </Text>
                       </View>
 
-                      <View>
-                        <Text
-                          className={`py-1 px-3 text-white text-xs border rounded-full font-semibold`}
-                          style={{
-                            backgroundColor: task.statusColor,
-                            borderColor: task.statusColor,
-                          }}
-                        >
-                          {task.status}
-                        </Text>
+                      <View className="flex flex-row justify-center items-center">
+                        <View className="flex flex-row justify-start items-center mr-2 border border-gray-200 rounded-full py-1 px-3 pl-1">
+                          <AntDesignIcon
+                            name="clockcircleo"
+                            size={15}
+                            color="#4b5563"
+                          />
+                          <Text className="text-gray-600 text-xs ml-1">
+                            {task.remindWhen}
+                          </Text>
+                        </View>
+
+                        <View>
+                          <Text
+                            className={`py-1 px-3 text-white text-xs border rounded-full font-semibold`}
+                            style={{
+                              backgroundColor: task.statusColor,
+                              borderColor: task.statusColor,
+                            }}
+                          >
+                            {task.status}
+                          </Text>
+                        </View>
                       </View>
                     </View>
                   </View>

@@ -10,6 +10,7 @@ const Stack = createNativeStackNavigator();
 import Login from "./screens/Login";
 import Tasks from "./screens/Tasks";
 import Profile from "./screens/Profile";
+import NewTask from "./screens/NewTask";
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Tasks" component={Tasks} />
           <Stack.Screen name="Profile" component={Profile} />
+          <Stack.Screen name="New" component={NewTask} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>

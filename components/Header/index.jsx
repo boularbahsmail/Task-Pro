@@ -1,13 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Image, Text, TouchableOpacity } from "react-native";
 
 // Assets
 import appLogo from "../../assets/app-logo.png";
 
-// Icons
-import AntDesignIcon from "react-native-vector-icons/AntDesign";
+// Async Storage
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+// Assets
+import defaultAvatar from "../../assets/images/default-avatar.png";
 
 const Header = ({ navigation }) => {
+  const [currentUserFullName, setCurrentUserFullName] = useState("");
+  const [currentUserAvatar, setCurrentUserAvatar] = useState(null);
+
+  const getData = async () => {
+    try {
+      const currentUserFullName = await AsyncStorage.getItem("userFullName");
+      const currentUserAvatar = await AsyncStorage.getItem("userAvatar");
+      if (currentUserFullName !== null) {
+        setCurrentUserFullName(currentUserFullName);
+        setCurrentUserAvatar(currentUserAvatar);
+      }
+    } catch (error) {
+      Alert.alert("Error", error);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  });
+
   return (
     <View className="flex flex-row justify-between items-center px-4">
       <TouchableOpacity
@@ -17,22 +40,35 @@ const Header = ({ navigation }) => {
         }}
         className="flex flex-row justify-start items-center"
       >
-        {/* <FontAwesomeIcon name="tasks" size={22} color="#dc2626" /> */}
         <Image
           source={appLogo}
           alt="App-Icon"
           style={{ height: 20, width: 90, borderRadius: 100 }}
         />
-        {/* <Text className="font-bold text-lg ml-1">TaskPro</Text> */}
       </TouchableOpacity>
-
       <View>
         <TouchableOpacity
-          className="flex flex-row justify-center items-center py-1.5 px-4 pl-3 rounded-full border border-red-600 shadow-2xl shadow-gray-100 bg-white"
-          activeOpacity={0.5}
+          activeOpacity={0.7}
+          onPress={() => {
+            navigation.navigate("Profile");
+          }}
         >
-          <AntDesignIcon name="pluscircle" size={16} color="#dc2626" />
-          <Text className="text-red-600 font-semibold text-sm ml-1.5">New</Text>
+          <View
+            className={`p-1 rounded-xl flex flex-row justify-center items-center bg-white shadow-2xl shadow-gray-200 border border-gray-200`}
+          >
+            <Image
+              source={
+                currentUserAvatar ? { uri: currentUserAvatar } : defaultAvatar
+              }
+              alt="User-Avatar"
+              style={{ height: 40, width: 40, borderRadius: 10 }}
+            />
+            {/* <Text
+              className={`ml-2 text-md font-semibold text-[#151515]`}
+            >
+              {currentUserFullName}
+            </Text> */}
+          </View>
         </TouchableOpacity>
       </View>
     </View>
