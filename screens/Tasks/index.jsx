@@ -26,6 +26,9 @@ const Tasks = ({ navigation }) => {
   const [currentTime, setCurrentTime] = useState("");
 
   const [tasksStatus, setTasksStatus] = useState("ALL");
+  const [todoTasksLength, setTodoTasksLength] = useState([]);
+  const [inProgressTasksLength, setInProgressTasksLength] = useState([]);
+  const [completeTasksLength, setCompleteTasksLength] = useState([]);
 
   const getData = async () => {
     try {
@@ -53,9 +56,25 @@ const Tasks = ({ navigation }) => {
     }
   };
 
+  const countTasksStatus = () => {
+    const todoTasks = tasks.filter((task) => task.statusSlug === "TODO");
+    setTodoTasksLength(todoTasks.length);
+
+    const inProgressTasks = tasks.filter(
+      (task) => task.statusSlug === "INPROGRESS"
+    );
+    setInProgressTasksLength(inProgressTasks.length);
+
+    const completeTasks = tasks.filter(
+      (task) => task.statusSlug === "COMPLETE"
+    );
+    setCompleteTasksLength(completeTasks.length);
+  };
+
   useEffect(() => {
     getData();
     getTime();
+    countTasksStatus();
   });
 
   return (
@@ -73,7 +92,6 @@ const Tasks = ({ navigation }) => {
           </Text>
         </View>
 
-        {/* <View className="mb-6 flex flex-row justify-start items-center"> */}
         <ScrollView
           className="mb-2 px-4 h-16 w-full"
           horizontal
@@ -114,48 +132,89 @@ const Tasks = ({ navigation }) => {
               {tasks.length}
             </Text>
           </TouchableOpacity>
-          {tasks
-            ? tasks.map(
-                (task) =>
-                  task.status && (
-                    <TouchableOpacity
-                      className={`py-1 px-4 pr-1 rounded-full border border-[#151515] flex flex-row justify-start items-center ${
-                        tasksStatus == task.statusSlug
-                          ? "bg-[#151515]"
-                          : "bg-white"
-                      }`}
-                      activeOpacity={0.7}
-                      key={task.id}
-                      onPress={() => {
-                        setTasksStatus(task.statusSlug);
-                      }}
-                    >
-                      <Text
-                        className={`text-sm font-semibold ${
-                          tasksStatus == task.statusSlug
-                            ? "text-white"
-                            : "text-[#151515]"
-                        }`}
-                      >
-                        {task.status}
-                      </Text>
-                      <Text
-                        className={`text-sm font-semibold ml-2 py-1 px-3 rounded-full ${
-                          tasksStatus == task.statusSlug
-                            ? "text-[#151515] bg-white"
-                            : "text-white bg-[#151515]"
-                        }`}
-                      >
-                        0
-                      </Text>
-                    </TouchableOpacity>
-                  )
-              )
-            : null}
-        </ScrollView>
-        {/* </View> */}
 
-        {/* <View className="flex flex-col justify-center items-center gap-y-6"> */}
+          <TouchableOpacity
+            className={`py-1 px-4 pr-1 rounded-full border border-[#151515] flex flex-row justify-start items-center ${
+              tasksStatus == "TODO" ? "bg-[#151515]" : "bg-white"
+            }`}
+            activeOpacity={0.7}
+            onPress={() => {
+              setTasksStatus("TODO");
+            }}
+          >
+            <Text
+              className={`text-sm font-semibold ${
+                tasksStatus == "TODO" ? "text-white" : "text-[#151515]"
+              }`}
+            >
+              To-Do
+            </Text>
+            <Text
+              className={`text-sm font-semibold ml-2 py-1 px-3 rounded-full ${
+                tasksStatus == "TODO"
+                  ? "text-[#151515] bg-white"
+                  : "text-white bg-[#151515]"
+              }`}
+            >
+              {todoTasksLength}
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            className={`py-1 px-4 pr-1 rounded-full border border-[#151515] flex flex-row justify-start items-center ${
+              tasksStatus == "INPROGRESS" ? "bg-[#151515]" : "bg-white"
+            }`}
+            activeOpacity={0.7}
+            onPress={() => {
+              setTasksStatus("INPROGRESS");
+            }}
+          >
+            <Text
+              className={`text-sm font-semibold ${
+                tasksStatus == "INPROGRESS" ? "text-white" : "text-[#151515]"
+              }`}
+            >
+              In Progress
+            </Text>
+            <Text
+              className={`text-sm font-semibold ml-2 py-1 px-3 rounded-full ${
+                tasksStatus == "INPROGRESS"
+                  ? "text-[#151515] bg-white"
+                  : "text-white bg-[#151515]"
+              }`}
+            >
+              {inProgressTasksLength}
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            className={`py-1 px-4 pr-1 rounded-full border border-[#151515] flex flex-row justify-start items-center ${
+              tasksStatus == "COMPLETE" ? "bg-[#151515]" : "bg-white"
+            }`}
+            activeOpacity={0.7}
+            onPress={() => {
+              setTasksStatus("COMPLETE");
+            }}
+          >
+            <Text
+              className={`text-sm font-semibold ${
+                tasksStatus == "COMPLETE" ? "text-white" : "text-[#151515]"
+              }`}
+            >
+              Complete
+            </Text>
+            <Text
+              className={`text-sm font-semibold ml-2 py-1 px-3 rounded-full ${
+                tasksStatus == "COMPLETE"
+                  ? "text-[#151515] bg-white"
+                  : "text-white bg-[#151515]"
+              }`}
+            >
+              {completeTasksLength}
+            </Text>
+          </TouchableOpacity>
+        </ScrollView>
+
         <ScrollView
           className="px-4"
           scrollEnabled={true}
@@ -303,7 +362,6 @@ const Tasks = ({ navigation }) => {
             </View>
           )}
         </ScrollView>
-        {/* </View> */}
       </View>
       <Navbar navigation={navigation} />
       <StatusBar style="auto" />

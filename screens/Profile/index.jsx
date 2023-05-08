@@ -92,32 +92,32 @@ const Profile = ({ navigation }) => {
               <Image
                 source={{ uri: image }}
                 alt="User-Avatar"
-                style={{ height: 130, width: 130, borderRadius: 300 }}
+                style={{ height: 150, width: 150, borderRadius: 300 }}
               />
             ) : (
               <Image
                 source={defaultAvatar}
                 alt="User-Avatar"
-                style={{ height: 130, width: 130, borderRadius: 300 }}
+                style={{ height: 150, width: 150, borderRadius: 300 }}
               />
             )}
           </View>
-          <View className="absolute right-0 bottom-2">
+          <View className="absolute -right-4 bottom-2">
             <TouchableOpacity
               activeOpacity={0.7}
-              className="bg-red-600 border border-red-700 w-7 h-7 rounded-full shadow-2xl shadow-red-600 flex justify-center items-center"
+              className="bg-red-600 border border-red-700 w-10 h-10 rounded-full shadow-2xl shadow-red-600 flex justify-center items-center"
               onPress={addImage}
             >
               <MaterialCommunityIconsIcon
-                name="image-edit"
-                size={14}
+                name="camera"
+                size={18}
                 color="white"
               />
             </TouchableOpacity>
           </View>
         </View>
 
-        <View className="flex flex-col justify-center items-center gap-y-2 py-4 pt-6">
+        <View className="flex flex-col justify-center items-center gap-y-2 py-4 mt-2">
           <Text className="text-4xl font-black text-black text-center">
             {userFullName}
           </Text>

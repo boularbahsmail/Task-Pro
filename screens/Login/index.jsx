@@ -84,7 +84,7 @@ const Login = ({ navigation }) => {
                 Full name
               </Text>
               <View>
-                <View className="w-full mb-4">
+                <View className="w-full mb-6">
                   <TextInput
                     className="rounded-md h-11 w-80 border border-gray-100 px-4 text-black bg-white shadow-2xl shadow-gray-300 focus:border-gray-400"
                     placeholder="John Doe"
@@ -111,7 +111,7 @@ const Login = ({ navigation }) => {
                 <Text className="text-gray-600 mb-3 text-sm text-left w-80 px-2 font-bold">
                   Email
                 </Text>
-                <View className="w-full mb-4">
+                <View className="w-full mb-6">
                   <TextInput
                     className="rounded-md h-11 w-80 border border-gray-100 px-4 text-black bg-white shadow-2xl shadow-gray-300 focus:border-gray-400"
                     placeholder="john_doe01@example.com"
