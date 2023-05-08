@@ -105,34 +105,39 @@ const NewTask = ({ navigation }) => {
                 />
               </View>
 
-              <Text className="text-gray-600 mb-3 text-sm text-left w-full font-bold">
-                Task status
-              </Text>
-              <View className="mb-6">
-                <View className="flex flex-row justify-start items-center gap-x-3">
-                  <View className="w-max">
-                    <TouchableOpacity
-                      className={`py-2 px-4 rounded-full border border-[#151515] bg-white flex flex-row justify-start items-center `}
-                      activeOpacity={0.7}
-                    >
-                      <Text className={`text-sm font-semibold text-[#151515]`}>
-                        To-Do
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
+              <View className="mb-0 flex flex-row justify-center items-start w-full">
+                <View>
+                  <Text className="text-gray-600 mb-3 text-sm text-left font-bold w-full">
+                    Task status
+                  </Text>
+                  <View className="flex flex-row justify-start items-center gap-x-3 mr-4">
+                    <View className="w-max">
+                      <TouchableOpacity
+                        className={`py-2 px-4 rounded-full border border-[#151515] bg-white flex flex-row justify-start items-center `}
+                        activeOpacity={0.7}
+                      >
+                        <Text
+                          className={`text-sm font-semibold text-[#151515]`}
+                        >
+                          To-Do
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
 
-                  <View className="w-max">
-                    <TouchableOpacity
-                      className={`py-2 px-4 rounded-full border border-[#151515] bg-white flex flex-row justify-start items-center `}
-                      activeOpacity={0.7}
-                    >
-                      <Text className={`text-sm font-semibold text-[#151515]`}>
-                        In Progress
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
+                    <View className="w-max">
+                      <TouchableOpacity
+                        className={`py-2 px-4 rounded-full border border-[#151515] bg-white flex flex-row justify-start items-center `}
+                        activeOpacity={0.7}
+                      >
+                        <Text
+                          className={`text-sm font-semibold text-[#151515]`}
+                        >
+                          In Progress
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
 
-                  {/* <View className="w-max">
+                    {/* <View className="w-max">
                     <TouchableOpacity
                       className={`py-2 px-4 rounded-full border border-[#151515] bg-white flex flex-row justify-start items-center `}
                       activeOpacity={0.7}
@@ -142,10 +147,43 @@ const NewTask = ({ navigation }) => {
                       </Text>
                     </TouchableOpacity>
                   </View> */}
+                  </View>
+                </View>
+
+                <View>
+                  <Text className="text-gray-600 mb-3 text-sm text-left w-full font-bold">
+                    Task reminder
+                  </Text>
+                  <View className="mb-6">
+                    <TextInput
+                      className="rounded-full w-40 border border-gray-100 px-4 py-1 text-md text-black bg-white shadow-2xl shadow-gray-300 focus:border-gray-400"
+                      placeholder="10:32 AM"
+                      autoComplete="off"
+                      autoFocus={false}
+                      cursorColor="gray"
+                      enterKeyHint="enter"
+                      // enablesReturnKeyAutomatically={true}
+                      // value={userFullNameValue}
+                      editable
+                      multiline
+                      keyboardType="numeric"
+                      onChangeText={async (currentUserName) => {
+                        // setUserFullNameValue(currentUserName);
+                        // try {
+                        //   await AsyncStorage.setItem(
+                        //     "userFullName",
+                        //     currentUserName
+                        //   );
+                        // } catch (error) {
+                        //   Alert.alert("Error", error);
+                        // }
+                      }}
+                    />
+                  </View>
                 </View>
               </View>
 
-              <View>
+              {/* <View>
                 <Text className="text-gray-600 mb-3 text-sm text-left w-full font-bold">
                   Task reminder
                 </Text>
@@ -175,9 +213,9 @@ const NewTask = ({ navigation }) => {
                     }}
                   />
                 </View>
-              </View>
+              </View> */}
 
-              <View className="mt-4 w-32">
+              <View className="mt-0 w-32">
                 <TouchableOpacity
                   className="rounded-full py-2 px-6 bg-red-600 border border-red-500 flex flex-row justify-center items-center"
                   activeOpacity={0.7}
