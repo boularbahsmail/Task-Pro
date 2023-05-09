@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -14,24 +14,56 @@ import Navbar from "../../components/Navbar";
 
 // Icons
 import IoniconsIcon from "react-native-vector-icons/Ionicons";
+import EntypoIcon from "react-native-vector-icons/Entypo";
+import AntDesignIcon from "react-native-vector-icons/AntDesign";
 
 // Async Storage
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const NewTask = ({ navigation }) => {
   const [userFullNameValue, setUserFullNameValue] = useState("");
+
+  const [taskTitle, setTaskTitle] = useState("Lorem Ipsum");
+  const [taskDescription, setTaskDescription] = useState(
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+  );
   const [createdAt, setCreatedAt] = useState("");
-  const [reminder, setReminder] = useState("00:00");
+  const [reminder, setReminder] = useState("");
 
-  const getDate = () => {
-    const now = new Date(),
+  const getDateTime = () => {
+    let now = new Date(),
       year = now.getFullYear(),
-      month = now.getMonth(),
-      day = now.getDay();
+      month = now.getMonth() + 1,
+      day = now.getDate(),
+      hour = now.getHours(),
+      minute = now.getMinutes();
 
-    const dateFormat = `${year} - ${month} - ${day}`;
+    if (month < 10) {
+      month = "0" + month;
+    }
+
+    if (day < 10) {
+      day = "0" + day;
+    }
+
+    if (hour < 10) {
+      hour = "0" + hour;
+    }
+
+    if (minute < 10) {
+      minute = "0" + minute;
+    }
+
+    const dateFormat = `${day}/${month}/${year}`;
     setCreatedAt(dateFormat);
+
+    const timeFormat = `${hour}:${minute}`;
+    setReminder(timeFormat);
   };
+
+  useEffect(() => {
+    getDateTime();
+  }, []);
 
   return (
     <View className="flex flex-1 relative h-screen bg-white py-4">
@@ -39,7 +71,7 @@ const NewTask = ({ navigation }) => {
       <View className="my-4 px-4">
         <Text className="text-3xl font-bold">New task</Text>
         <Text className="text-sm text-gray-400 font-normal">
-          Init and track tasks easily
+          Init and track your tasks easily
         </Text>
 
         <KeyboardAvoidingView
@@ -61,9 +93,9 @@ const NewTask = ({ navigation }) => {
                   cursorColor="gray"
                   enterKeyHint="enter"
                   enablesReturnKeyAutomatically={true}
-                  value={userFullNameValue}
-                  onChangeText={async (currentUserName) => {
-                    setUserFullNameValue(currentUserName);
+                  // value={taskTitle}
+                  onChangeText={async (activeTaskTitle) => {
+                    setTaskTitle(activeTaskTitle);
                     // try {
                     //   await AsyncStorage.setItem(
                     //     "userFullName",
@@ -88,11 +120,11 @@ const NewTask = ({ navigation }) => {
                   cursorColor="gray"
                   enterKeyHint="enter"
                   // enablesReturnKeyAutomatically={true}
-                  // value={userFullNameValue}
+                  // value={taskDescription}
                   editable
                   multiline
-                  onChangeText={async (currentUserName) => {
-                    // setUserFullNameValue(currentUserName);
+                  onChangeText={async (activeTaskDescription) => {
+                    setTaskDescription(activeTaskDescription);
                     // try {
                     //   await AsyncStorage.setItem(
                     //     "userFullName",
@@ -157,17 +189,17 @@ const NewTask = ({ navigation }) => {
                   <View className="mb-6">
                     <TextInput
                       className="rounded-full w-40 border border-gray-100 px-4 py-1 text-md text-black bg-white shadow-2xl shadow-gray-300 focus:border-gray-400"
-                      placeholder="10:32 AM"
+                      placeholder={reminder}
                       autoComplete="off"
                       autoFocus={false}
                       cursorColor="gray"
                       enterKeyHint="enter"
                       // enablesReturnKeyAutomatically={true}
-                      // value={userFullNameValue}
+                      value={reminder}
                       editable
                       multiline
-                      keyboardType="numeric"
-                      onChangeText={async (currentUserName) => {
+                      onChangeText={async (activeReminder) => {
+                        setReminder(activeReminder);
                         // setUserFullNameValue(currentUserName);
                         // try {
                         //   await AsyncStorage.setItem(
@@ -215,7 +247,7 @@ const NewTask = ({ navigation }) => {
                 </View>
               </View> */}
 
-              <View className="mt-0 w-32">
+              <View className="mb-6 w-32">
                 <TouchableOpacity
                   className="rounded-full py-2 px-6 bg-red-600 border border-red-500 flex flex-row justify-center items-center"
                   activeOpacity={0.7}
@@ -253,6 +285,54 @@ const NewTask = ({ navigation }) => {
                     />
                   </Text>
                 </TouchableOpacity>
+              </View>
+
+              <Text className="text-gray-600 mb-6 text-sm text-left font-bold w-full">
+                Task card live preview
+              </Text>
+              <View className="w-full p-4 border border-[#262626] rounded-xl flex flex-col justify-center items-start gap-y-2 pt-1 bg-white border-r-2 border-b-2">
+                <View className="flex flex-row justify-between items-center w-full">
+                  <Text className="text-xl font-semibold">{taskTitle}</Text>
+                  <TouchableOpacity activeOpacity={0.7}>
+                    <EntypoIcon
+                      name="dots-three-horizontal"
+                      size={16}
+                      color="#4b5563"
+                    />
+                  </TouchableOpacity>
+                </View>
+                <Text className="text-sm text-gray-400 font-normal mb-2">
+                  {taskDescription}
+                </Text>
+                <View className="flex flex-row justify-between items-center w-full">
+                  <View className="flex flex-row justify-start items-center">
+                    <AntDesignIcon name="calendar" size={16} color="#4b5563" />
+                    <Text className="ml-1 text-gray-600 text-sm">
+                      {createdAt}
+                    </Text>
+                  </View>
+
+                  <View className="flex flex-row justify-center items-center">
+                    <View className="flex flex-row justify-start items-center mr-2 border border-gray-200 rounded-full py-1 px-3 pl-1">
+                      <AntDesignIcon
+                        name="clockcircleo"
+                        size={15}
+                        color="#4b5563"
+                      />
+                      <Text className="text-gray-600 text-xs ml-1">
+                        {reminder}
+                      </Text>
+                    </View>
+
+                    <View>
+                      <Text
+                        className={`py-1 px-3 text-white bg-[#151515] text-xs border border-[#151515] rounded-full font-semibold`}
+                      >
+                        To-Do
+                      </Text>
+                    </View>
+                  </View>
+                </View>
               </View>
             </View>
           </View>

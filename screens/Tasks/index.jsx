@@ -57,16 +57,16 @@ const Tasks = ({ navigation }) => {
   };
 
   const countTasksStatus = () => {
-    const todoTasks = tasks.filter((task) => task.statusSlug === "TODO");
+    const todoTasks = tasks?.filter((task) => task?.statusSlug === "TODO");
     setTodoTasksLength(todoTasks.length);
 
-    const inProgressTasks = tasks.filter(
-      (task) => task.statusSlug === "INPROGRESS"
+    const inProgressTasks = tasks?.filter(
+      (task) => task?.statusSlug === "INPROGRESS"
     );
     setInProgressTasksLength(inProgressTasks.length);
 
-    const completeTasks = tasks.filter(
-      (task) => task.statusSlug === "COMPLETE"
+    const completeTasks = tasks?.filter(
+      (task) => task?.statusSlug === "COMPLETE"
     );
     setCompleteTasksLength(completeTasks.length);
   };
@@ -129,7 +129,7 @@ const Tasks = ({ navigation }) => {
                   : "text-white bg-[#151515]"
               }`}
             >
-              {tasks.length}
+              {tasks?.length}
             </Text>
           </TouchableOpacity>
 
@@ -229,15 +229,15 @@ const Tasks = ({ navigation }) => {
           }}
           showsVerticalScrollIndicator={false}
         >
-          {tasks ? (
+          {tasks.length ? (
             tasks.map((task) =>
-              tasksStatus == task.statusSlug ? (
+              tasksStatus == task?.statusSlug ? (
                 <View
                   className="w-full p-4 border border-[#262626] rounded-xl flex flex-col justify-center items-start gap-y-2 pt-1 bg-white border-r-2 border-b-2"
-                  key={task.id}
+                  key={task?.id}
                 >
                   <View className="flex flex-row justify-between items-center w-full">
-                    <Text className="text-xl font-semibold">{task.title}</Text>
+                    <Text className="text-xl font-semibold">{task?.title}</Text>
                     <TouchableOpacity activeOpacity={0.7}>
                       <EntypoIcon
                         name="dots-three-horizontal"
@@ -247,7 +247,7 @@ const Tasks = ({ navigation }) => {
                     </TouchableOpacity>
                   </View>
                   <Text className="text-sm text-gray-400 font-normal mb-2">
-                    {task.description}
+                    {task?.description}
                   </Text>
                   <View className="flex flex-row justify-between items-center w-full">
                     <View className="flex flex-row justify-start items-center">
@@ -257,7 +257,7 @@ const Tasks = ({ navigation }) => {
                         color="#4b5563"
                       />
                       <Text className="ml-1 text-gray-600 text-sm">
-                        {task.createdAt}
+                        {task?.createdAt}
                       </Text>
                     </View>
 
@@ -269,7 +269,7 @@ const Tasks = ({ navigation }) => {
                           color="#4b5563"
                         />
                         <Text className="text-gray-600 text-xs ml-1">
-                          {task.remindWhen}
+                          {task?.remindWhen}
                         </Text>
                       </View>
 
@@ -277,11 +277,11 @@ const Tasks = ({ navigation }) => {
                         <Text
                           className={`py-1 px-3 text-white text-xs border rounded-full font-semibold`}
                           style={{
-                            backgroundColor: task.statusColor,
-                            borderColor: task.statusColor,
+                            backgroundColor: task?.statusColor,
+                            borderColor: task?.statusColor,
                           }}
                         >
-                          {task.status}
+                          {task?.status}
                         </Text>
                       </View>
                     </View>
@@ -291,11 +291,11 @@ const Tasks = ({ navigation }) => {
                 tasksStatus == "ALL" && (
                   <View
                     className="w-full p-4 border border-[#262626] rounded-xl flex flex-col justify-center items-start gap-y-2 pt-1 bg-white border-r-2 border-b-2"
-                    key={task.id}
+                    key={task?.id}
                   >
                     <View className="flex flex-row justify-between items-center w-full">
                       <Text className="text-xl font-semibold">
-                        {task.title}
+                        {task?.title}
                       </Text>
                       <TouchableOpacity activeOpacity={0.7}>
                         <EntypoIcon
@@ -306,7 +306,7 @@ const Tasks = ({ navigation }) => {
                       </TouchableOpacity>
                     </View>
                     <Text className="text-sm text-gray-400 font-normal mb-2">
-                      {task.description}
+                      {task?.description}
                     </Text>
                     <View className="flex flex-row justify-between items-center w-full">
                       <View className="flex flex-row justify-start items-center">
@@ -316,7 +316,7 @@ const Tasks = ({ navigation }) => {
                           color="#4b5563"
                         />
                         <Text className="ml-1 text-gray-600 text-sm">
-                          {task.createdAt}
+                          {task?.createdAt}
                         </Text>
                       </View>
 
@@ -328,7 +328,7 @@ const Tasks = ({ navigation }) => {
                             color="#4b5563"
                           />
                           <Text className="text-gray-600 text-xs ml-1">
-                            {task.remindWhen}
+                            {task?.remindWhen}
                           </Text>
                         </View>
 
@@ -336,11 +336,11 @@ const Tasks = ({ navigation }) => {
                           <Text
                             className={`py-1 px-3 text-white text-xs border rounded-full font-semibold`}
                             style={{
-                              backgroundColor: task.statusColor,
-                              borderColor: task.statusColor,
+                              backgroundColor: task?.statusColor,
+                              borderColor: task?.statusColor,
                             }}
                           >
-                            {task.status}
+                            {task?.status}
                           </Text>
                         </View>
                       </View>
@@ -357,7 +357,7 @@ const Tasks = ({ navigation }) => {
                 // style={{ height: 100, width: 100 }}
               />
               <Text className="mt-4 text-md font-normal text-gray-400">
-                No tasks created yet
+                No tasks to show
               </Text>
             </View>
           )}

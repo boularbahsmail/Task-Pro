@@ -12,6 +12,7 @@ import defaultAvatar from "../../assets/images/default-avatar.png";
 import AntDesignIcon from "react-native-vector-icons/AntDesign";
 import FontistoIcon from "react-native-vector-icons/Fontisto";
 import MaterialCommunityIconsIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 
 // Async Storage
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -118,13 +119,15 @@ const Profile = ({ navigation }) => {
         </View>
 
         <View className="flex flex-col justify-center items-center gap-y-2 py-4 mt-2">
-          <Text className="text-4xl font-black text-black text-center">
-            {userFullName}
-          </Text>
           <View className="flex flex-row justify-center items-center">
-            <Text className="bg-gray-50 border border-gray-100 py-1 px-1.5 rounded-md text-center">
-              <FontistoIcon name="email" size={14} color="gray" />
+            <Text className="text-4xl font-black text-black text-center mr-1">
+              {userFullName}
             </Text>
+            <TouchableOpacity activeOpacity={0.7} className="mt-1 py-2 px-1 flex justify-center items-center">
+              <FontAwesomeIcon name="edit" size={16} color="gray" />
+            </TouchableOpacity>
+          </View>
+          <View className="flex flex-row justify-center items-center">
             <Text className="ml-1 text-xs text-gray-500 bg-gray-50 border border-gray-100 py-1 px-1.5 rounded-md text-center">
               {userEmail}
             </Text>
